@@ -1,0 +1,14 @@
+{
+  "name": "whitethoothapi",
+  "version": "1.0.0",
+  "description": "Mock API for teams with multi environment support",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "PizzaTip",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
