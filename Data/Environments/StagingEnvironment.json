@@ -1,0 +1,13 @@
+{
+  "name": "staging",
+  "relativePath": "/staging",
+  "responses": {
+    "/test": {
+      "get": {},
+      "post": {}
+    },
+    "/load": {
+      "get": {}
+    }
+  }
+}
