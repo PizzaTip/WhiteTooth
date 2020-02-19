@@ -1,5 +1,5 @@
 import express = require('express');
-import fsDal = require('./Adapters/FileSystem/fsDal');
+import fsDal = require('./Adapters/FileSystem/FileSystemDal');
 const dal: fsDal.FileSystemDal = new fsDal.FileSystemDal();
 const app: express.Application = express();
 const port = 3100;
@@ -45,7 +45,7 @@ app.get('/requests', (req: express.Request, res: express.Response) => {
 });
 
 /**
- * if non of the links firs, return 404
+ * If non of the links suits, return 404
  */
 app.get('*', (req: express.Request, res: express.Response) => {
   res.status(404).send('Not found');
