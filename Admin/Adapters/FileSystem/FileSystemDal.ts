@@ -3,6 +3,10 @@ import Port = require('../../Ports/IDal');
 import path = require('path');
 
 class FileSystemDal implements Port.IDal {
+  private _requestsConfigFilePath: string =
+    '../Data/Requests/RequestsConfig.json';
+  private _environmentsDirectoryPath: string = '../Data/Environments';
+
   /**
    * Find all files inside a dir, recursively.
    * @function getAllFilesInDirectoryRecursive
@@ -23,9 +27,7 @@ class FileSystemDal implements Port.IDal {
    */
   public getAllRequests(): string[] {
     console.log(`Getting requests...`);
-    return JSON.parse(
-      fs.readFileSync('../Data/Requests/RequestsConfig.json', 'utf8')
-    );
+    return JSON.parse(fs.readFileSync(this._requestsConfigFilePath, 'utf8'));
   }
 
   /**
@@ -33,7 +35,7 @@ class FileSystemDal implements Port.IDal {
    * @param environmentName the name of the environment
    */
   public getEnvironmentByName(environmentName: string): any {
-    const path = `../Data/Environments/${environmentName}Environment.json`;
+    const path = `${this._environmentsDirectoryPath}/${environmentName}Environment.json`;
     console.log(`Getting ${environmentName} environment...`);
     if (fs.existsSync(path)) {
       return fs.readFileSync(path, 'utf8');
@@ -48,9 +50,10 @@ class FileSystemDal implements Port.IDal {
   public getAllEnvironments(): string[] {
     console.log('Getting all envs...');
     let result: string[] = [];
-    let files = this.getAllFilesInDirectoryRecursive('../Data/Environments');
-    console.log(`number of files ${files.length}`);
-    files.forEach(filePath => {
+    let environmentFiles = this.getAllFilesInDirectoryRecursive(
+      this._environmentsDirectoryPath
+    );
+    environmentFiles.forEach(filePath => {
       result.push(JSON.parse(fs.readFileSync(filePath, 'utf8')));
     });
     return result;
