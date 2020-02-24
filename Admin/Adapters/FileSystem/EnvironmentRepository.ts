@@ -37,15 +37,27 @@ class EnvironmentRepository implements Port.IEnvironmentRepository {
   /**
    * Return all environments data
    */
-  public getAllEnvironments(): string[] {
+  public async getAllEnvironments(): Promise<string[]> {
     console.log('Getting all envs...');
     let result: string[] = [];
     let environmentFiles = this.getAllFilesInDirectoryRecursive(
       this._environmentsDirectoryPath
     );
-    environmentFiles.forEach(filePath => {
-      result.push(JSON.parse(fs.readFileSync(filePath, 'utf8')));
+    await Promise.all(
+      environmentFiles.map((filePath: string) => {
+        return new Promise((resolve, reject) => {
+          fs.readFile(filePath, 'utf8', (err, data) => {
+            if (err) throw err;
+            resolve(JSON.parse(data));
+          });
+        });
+      })
+    ).then(results => {
+      result = results.map(value => {
+        return value as string;
+      });
     });
+
     return result;
   }
 }

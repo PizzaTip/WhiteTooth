@@ -33,11 +33,14 @@ app.get(
 /**
  * Get all environments
  */
-app.get('/environments', (req: express.Request, res: express.Response) => {
-  let environments = environmentRepository.getAllEnvironments();
-  res.setHeader('Content-Type', 'application/json');
-  res.send(environments).end();
-});
+app.get(
+  '/environments',
+  async (req: express.Request, res: express.Response) => {
+    let environments = await environmentRepository.getAllEnvironments();
+    res.setHeader('Content-Type', 'application/json');
+    res.send(environments).end();
+  }
+);
 
 /**
  * Get all requests

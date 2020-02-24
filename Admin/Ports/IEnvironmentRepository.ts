@@ -1,6 +1,6 @@
 interface IEnvironmentRepository {
   getEnvironmentByName(environmentName: string): any;
-  getAllEnvironments(): string[];
+  getAllEnvironments(): Promise<string[]>;
 }
 
 export { IEnvironmentRepository };
