@@ -1,6 +1,8 @@
 import express = require('express');
-import fsDal = require('./Adapters/FileSystem/FileSystemDal');
-const dal: fsDal.FileSystemDal = new fsDal.FileSystemDal();
+import environmentRepositoryAdapter = require('./Adapters/FileSystem/EnvironmentRepository');
+const environmentRepository: environmentRepositoryAdapter.EnvironmentRepository = new environmentRepositoryAdapter.EnvironmentRepository();
+import requestRepositoryAdapter = require('./Adapters/FileSystem/RequestRepository');
+const requestRepository: requestRepositoryAdapter.RequestRepository = new requestRepositoryAdapter.RequestRepository();
 const app: express.Application = express();
 const port = 3100;
 
@@ -12,7 +14,9 @@ app.get(
   (req: express.Request, res: express.Response) => {
     const environmentName = req.params.environmentName;
     res.setHeader('Content-Type', 'application/json');
-    let environment = dal.getEnvironmentByName(environmentName);
+    let environment = environmentRepository.getEnvironmentByName(
+      environmentName
+    );
     if (environment) {
       res.setHeader('Content-Type', 'application/json');
       res.send(environment).end();
@@ -30,7 +34,7 @@ app.get(
  * Get all environments
  */
 app.get('/environments', (req: express.Request, res: express.Response) => {
-  let environments = dal.getAllEnvironments();
+  let environments = environmentRepository.getAllEnvironments();
   res.setHeader('Content-Type', 'application/json');
   res.send(environments).end();
 });
@@ -40,7 +44,7 @@ app.get('/environments', (req: express.Request, res: express.Response) => {
  */
 app.get('/requests', (req: express.Request, res: express.Response) => {
   res.setHeader('Content-Type', 'application/json');
-  let content = dal.getAllRequests();
+  let content = requestRepository.getAllRequests();
   res.send(content);
 });
 

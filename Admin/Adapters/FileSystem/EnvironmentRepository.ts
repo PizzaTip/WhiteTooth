@@ -1,10 +1,8 @@
 import fs = require('fs');
-import Port = require('../../Ports/IDal');
+import Port = require('../../Ports/IEnvironmentRepository');
 import path = require('path');
 
-class FileSystemDal implements Port.IDal {
-  private _requestsConfigFilePath: string =
-    '../Data/Requests/RequestsConfig.json';
+class EnvironmentRepository implements Port.IEnvironmentRepository {
   private _environmentsDirectoryPath: string = '../Data/Environments';
 
   /**
@@ -21,14 +19,6 @@ class FileSystemDal implements Port.IDal {
         ? [...files, ...this.getAllFilesInDirectoryRecursive(name)]
         : [...files, name];
     }, []);
-
-  /**
-   * Returns all requests types
-   */
-  public getAllRequests(): string[] {
-    console.log(`Getting requests...`);
-    return JSON.parse(fs.readFileSync(this._requestsConfigFilePath, 'utf8'));
-  }
 
   /**
    * Returns environment data by environment name
@@ -60,4 +50,4 @@ class FileSystemDal implements Port.IDal {
   }
 }
 
-export { FileSystemDal };
+export { EnvironmentRepository };

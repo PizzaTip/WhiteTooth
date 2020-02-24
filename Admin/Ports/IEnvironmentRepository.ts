@@ -1,7 +1,6 @@
-interface IDal {
+interface IEnvironmentRepository {
   getEnvironmentByName(environmentName: string): any;
   getAllEnvironments(): string[];
-  getAllRequests(): string[];
 }
 
-export { IDal };
+export { IEnvironmentRepository };
