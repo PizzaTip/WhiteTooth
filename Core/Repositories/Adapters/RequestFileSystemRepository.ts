@@ -1,5 +1,5 @@
 import fs = require('fs');
-import Port = require('../../Ports/IRequestRepository');
+import Port = require('../Ports/IRequestRepository');
 
 class RequestRepository implements Port.IRequestRepository {
   private _requestsConfigFilePath: string =
