@@ -2,5 +2,9 @@
   {
     "relativePath": "/test",
     "name": "Test Request"
+  },
+  {
+    "relativePath": "/load",
+    "name": "Load Request"
   }
 ]
