@@ -1,5 +1,5 @@
 import fs = require('fs');
-import Port = require('../../Ports/IEnvironmentRepository');
+import Port = require('../Ports/IEnvironmentRepository');
 import path = require('path');
 
 class EnvironmentRepository implements Port.IEnvironmentRepository {
