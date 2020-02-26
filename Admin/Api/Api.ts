@@ -1,6 +1,6 @@
 import express = require('express');
-import IEnvironmentRepository = require('../Core/Repositories/Ports/IEnvironmentRepository');
-import IRequestRepository = require('../Core/Repositories/Ports/IRequestRepository');
+import IEnvironmentRepository = require('../../Core/Repositories/Ports/IEnvironmentRepository');
+import IRequestRepository = require('../../Core/Repositories/Ports/IRequestRepository');
 
 class AdminApi {
   private readonly _port: number;
@@ -15,8 +15,6 @@ class AdminApi {
     this._port = port;
     this._environmentRepository = envirnemntRepository;
     this._requestRepository = requestRepository;
-
-    this.start();
   }
 
   start() {

@@ -1,6 +1,6 @@
 import api = require('./Api');
-import requestRepositoryAdapter = require('../Core/Repositories/Adapters/RequestFileSystemRepository');
-import environmentRepositoryAdapter = require('../Core/Repositories/Adapters/EnvironmentFileSystemRepository');
+import requestRepositoryAdapter = require('../../Core/Repositories/Adapters/RequestFileSystemRepository');
+import environmentRepositoryAdapter = require('../../Core/Repositories/Adapters/EnvironmentFileSystemRepository');
 
 const port = 3100;
 
