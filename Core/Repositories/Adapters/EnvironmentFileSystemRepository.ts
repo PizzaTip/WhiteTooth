@@ -3,7 +3,7 @@ import Port = require('../Ports/IEnvironmentRepository');
 import path = require('path');
 
 class EnvironmentRepository implements Port.IEnvironmentRepository {
-  private _environmentsDirectoryPath: string = '../Data/Environments';
+  private _environmentsDirectoryPath: string = '../../Data/Environments';
 
   /**
    * Find all files inside a dir, recursively.
