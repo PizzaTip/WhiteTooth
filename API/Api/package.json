@@ -4,7 +4,7 @@
   "description": "Mock API for teams with multi environment support",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node ./build/index.js",
+    "api": "npm run build && node ./build/API/Api/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
