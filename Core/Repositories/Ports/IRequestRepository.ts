@@ -1,5 +1,7 @@
+import { Request } from '../../Models/request';
+
 interface IRequestRepository {
-  getAllRequests(): string[];
+  getAllRequests(): Request[];
 }
 
 export { IRequestRepository };

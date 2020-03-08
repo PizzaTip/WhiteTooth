@@ -1,5 +1,6 @@
 import fs = require('fs');
 import Port = require('../Ports/IRequestRepository');
+import { Request } from '../../Models/request';
 
 class RequestRepository implements Port.IRequestRepository {
   private _requestsConfigFilePath: string =
@@ -8,7 +9,7 @@ class RequestRepository implements Port.IRequestRepository {
   /**
    * Returns all requests types
    */
-  public getAllRequests(): string[] {
+  public getAllRequests(): Request[] {
     console.log(`Getting requests...`);
     return JSON.parse(fs.readFileSync(this._requestsConfigFilePath, 'utf8'));
   }
