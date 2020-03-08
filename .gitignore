@@ -103,3 +103,7 @@ dist
 # TernJS port file
 .tern-port
 /API/.vs
+/.vs/slnx.sqlite
+/.vs/WhiteTooth/config/applicationhost.config
+/.vs/WhiteTooth/v16/.suo
+/.vs/VSWorkspaceState.json
