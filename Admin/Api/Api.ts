@@ -1,6 +1,7 @@
 import express = require('express');
 import IEnvironmentRepository = require('../../Core/Repositories/Ports/IEnvironmentRepository');
 import IRequestRepository = require('../../Core/Repositories/Ports/IRequestRepository');
+import { Request } from '../../Core/Models/request';
 
 class AdminApi {
   private readonly _port: number;
@@ -19,6 +20,7 @@ class AdminApi {
 
   start() {
     const app: express.Application = express();
+    app.use(express.json());
     /**
      * Get specific environment
      */
@@ -56,6 +58,31 @@ class AdminApi {
         res.send(environments).end();
       }
     );
+
+    /*
+     * Adds new request to data source
+     */
+    app.post('/request', (req: express.Request, res: express.Response) => {
+      const name = req.body.name;
+      const relativePath = req.body.relativePath;
+
+      // validate all inputs supplied
+      if (!name || !relativePath) {
+        res.statusCode = 500;
+        res.send({ error: 'Sorry, Missing parameter', success: false }).end();
+      }
+
+      let request = new Request(relativePath, name);
+      try {
+        this._requestRepository.add(request);
+        res.send({ error: '', success: true }).end();
+      } catch (e) {
+        console.log(e);
+        res.send({ error: e, success: false }).end();
+      }
+
+      res.end();
+    });
 
     /**
      * Get all requests
