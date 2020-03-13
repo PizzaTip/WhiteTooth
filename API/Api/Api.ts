@@ -20,7 +20,8 @@ class WhiteToothAPI {
             try {
                 const parsedURL = this.parseRequestURL(req.url);
                 const environment = JSON.parse(this._environmentRepository.getEnvironmentByName(parsedURL.environment));
-                const response = environment.responses[parsedURL.url];
+                console.log(parsedURL.url);
+                const response = environment.responses[parsedURL.url].get;
                 if (response)
                     res.send(response);
                 else
@@ -36,12 +37,13 @@ class WhiteToothAPI {
 
     parseRequestURL(url: string): ParsedRequest {
         const urlParts = url.split("/");
-        if (urlParts.length !== 3)
-            throw "Bad url format - should be: `environment/endpoint`";
+        console.log(urlParts);
+        if (urlParts.length < 2)
+            throw "Bad url format - should be: `environment/endpoint/...`";
 
         const result =  {
             environment: urlParts[1],
-            url: `/${urlParts[2]}`
+            url: "/" + urlParts.slice(2).join("/")
         }
 
         return result;
