@@ -3,7 +3,7 @@ import Port = require('../Ports/IRequestRepository');
 import { Request } from '../../Models/request';
 
 class RequestRepository implements Port.IRequestRepository {
-  private readonly _requestsConfigFilePath: string =
+  private readonly REQUESTS_FILE_PATH: string =
     '../../Data/Requests/RequestsConfig.json';
 
   /**
@@ -21,7 +21,7 @@ class RequestRepository implements Port.IRequestRepository {
     allRequests.push(request);
 
     fs.writeFile(
-      this._requestsConfigFilePath,
+      this.REQUESTS_FILE_PATH,
       JSON.stringify(allRequests),
       error => {
         if (error) {
@@ -49,7 +49,7 @@ class RequestRepository implements Port.IRequestRepository {
     let filteredRequests = allRequests.filter(req => req.id != id);
 
     fs.writeFile(
-      this._requestsConfigFilePath,
+      this.REQUESTS_FILE_PATH,
       JSON.stringify(filteredRequests),
       error => {
         if (error) {
@@ -71,7 +71,7 @@ class RequestRepository implements Port.IRequestRepository {
     allRequests[requestIndex].name = request.name;
 
     fs.writeFile(
-      this._requestsConfigFilePath,
+      this.REQUESTS_FILE_PATH,
       JSON.stringify(allRequests),
       error => {
         if (error) {
@@ -98,11 +98,11 @@ class RequestRepository implements Port.IRequestRepository {
    */
   public getAllRequests(): Request[] {
     console.log(`Getting requests...`);
-    let buffer = fs.readFileSync(this._requestsConfigFilePath, 'utf8');
+    let buffer = fs.readFileSync(this.REQUESTS_FILE_PATH, 'utf8');
     if (buffer.length === 0) {
       return JSON.parse('[]');
     }
-    return JSON.parse(fs.readFileSync(this._requestsConfigFilePath, 'utf8'));
+    return JSON.parse(fs.readFileSync(this.REQUESTS_FILE_PATH, 'utf8'));
   }
 }
 
