@@ -1,5 +1,7 @@
 import express = require('express');
+import _ = require('lodash');
 import IEnvironmentRepository = require('../../Core/Repositories/Ports/IEnvironmentRepository');
+
 
 class WhiteToothAPI {
     private readonly _port: number;
@@ -19,12 +21,17 @@ class WhiteToothAPI {
         app.get('*', (req: express.Request, res: express.Response) => {
             try {
                 const parsedURL = this.parseRequestURL(req.url);
-                const environment = JSON.parse(this._environmentRepository.getEnvironmentByName(parsedURL.environment));
-                const response = environment.responses[parsedURL.url].get;
+                const environment = this._environmentRepository.getEnvironmentByName(parsedURL.environment);
+
+                if (_.isEmpty(environment) || _.isEmpty(environment.responses))
+                    throw `Environment: ${parsedURL.environment} - not found`;
+
+                const response = _.get(environment.responses, parsedURL.url, false);
+
                 if (response)
                     res.send(response);
                 else
-                    res.status(404).send("Not Found");
+                    res.status(404).send(`${parsedURL.url} is not defined under ${parsedURL.environment} environment`);
             }
             catch (e){
                 res.status(500).send(e);
@@ -36,14 +43,13 @@ class WhiteToothAPI {
 
     parseRequestURL(url: string): ParsedRequest {
         const urlParts = url.split("/");
-        if (urlParts.length < 2)
+        if (urlParts.length < 3)
             throw "Bad url format - should be: `environment/endpoint/...`";
 
         const result =  {
             environment: urlParts[1],
             url: "/" + urlParts.slice(2).join("/")
         }
-
         return result;
     }
 }

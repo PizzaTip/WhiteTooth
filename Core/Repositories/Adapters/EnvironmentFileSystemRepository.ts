@@ -28,7 +28,7 @@ class EnvironmentRepository implements Port.IEnvironmentRepository {
     const path = `${this._environmentsDirectoryPath}/${environmentName}Environment.json`;
     console.log(`Getting ${environmentName} environment...`);
     if (fs.existsSync(path)) {
-      return fs.readFileSync(path, 'utf8');
+        return JSON.parse(fs.readFileSync(path, 'utf8'));
     } else {
       return null;
     }
