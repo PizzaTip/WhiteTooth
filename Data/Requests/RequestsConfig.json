@@ -1,1 +1,12 @@
-[{"relativePath":"/test","name":"Test Request"},{"relativePath":"/load","name":"Load Request"}]
+[
+  {
+    "relativePath": "part1/part2",
+    "name": "2PartsUrl",
+    "id": "38631b80-6536-11ea-92df-3bc52aa19de1"
+  },
+  {
+    "relativePath": "/test",
+    "name": "Test Request",
+    "id": "4f4e1ca0-6536-11ea-92df-3bc52aa19de1"
+  }
+]

@@ -3,6 +3,9 @@ import Port = require('../Ports/IRequestRepository');
 import { Request } from '../../Models/request';
 
 class RequestRepository implements Port.IRequestRepository {
+  private _requestsConfigFilePath: string =
+    '../../Data/Requests/RequestsConfig.json';
+
   /**
    * Adds request to data source
    * @param request rqeuest object to add
@@ -32,21 +35,18 @@ class RequestRepository implements Port.IRequestRepository {
   }
 
   /**
-   * Deletes request from data source
-   * @param requestPath the path of the request to be deleted
+   * Deletes request from data source by id
+   * @param id id of the request to be deleted
    */
-  remove(requestPath: string): void {
+  remove(id: string): void {
     const allRequests = this.getAllRequests();
 
     // validate request exists already
-    console.log(requestPath);
-    if (!allRequests.find(req => req.relativePath == requestPath)) {
+    if (!allRequests.find(req => req.id == id)) {
       throw 'Request not exists';
     }
 
-    let filteredRequests = allRequests.filter(
-      req => req.relativePath != requestPath
-    );
+    let filteredRequests = allRequests.filter(req => req.id != id);
 
     fs.writeFile(
       this._requestsConfigFilePath,
@@ -60,18 +60,26 @@ class RequestRepository implements Port.IRequestRepository {
     );
   }
 
-  get(requestPath: string): void {
-    throw new Error('Method not implemented.');
-  }
+  get(id: string): Request | undefined {
+    const allRequests = this.getAllRequests();
 
-  private _requestsConfigFilePath: string =
-    '../../Data/Requests/RequestsConfig.json';
+    const request = allRequests.find(req => req.id === id);
+    if (!request) {
+      throw 'Request did not found';
+    }
+
+    return request;
+  }
 
   /**
    * Returns all requests types
    */
   public getAllRequests(): Request[] {
     console.log(`Getting requests...`);
+    let buffer = fs.readFileSync(this._requestsConfigFilePath, 'utf8');
+    if (buffer.length === 0) {
+      return JSON.parse('[]');
+    }
     return JSON.parse(fs.readFileSync(this._requestsConfigFilePath, 'utf8'));
   }
 }

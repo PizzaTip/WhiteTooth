@@ -2,6 +2,7 @@ import express = require('express');
 import IEnvironmentRepository = require('../../Core/Repositories/Ports/IEnvironmentRepository');
 import IRequestRepository = require('../../Core/Repositories/Ports/IRequestRepository');
 import { Request } from '../../Core/Models/request';
+import { v1 as uuidv1 } from 'uuid';
 
 class AdminApi {
   private readonly _port: number;
@@ -59,6 +60,32 @@ class AdminApi {
       }
     );
 
+    /**
+     * Gets specific request
+     */
+    app.get('/request/:id', (req: express.Request, res: express.Response) => {
+      const id = req.params.id;
+
+      try {
+        const request = this._requestRepository.get(id);
+        if (!request) {
+          res
+            .status(404)
+            .send('Request object not found')
+            .end();
+        }
+        res
+          .header('Content-Type', 'application/json')
+          .send(request)
+          .end();
+      } catch (e) {
+        console.log(e);
+        res.send({ error: e, success: false }).end();
+      }
+
+      res.end();
+    });
+
     /*
      * Adds new request to data source
      */
@@ -72,7 +99,7 @@ class AdminApi {
         res.send({ error: 'Sorry, Missing parameter', success: false }).end();
       }
 
-      let request = new Request(relativePath, name);
+      let request = new Request(uuidv1(), relativePath, name);
       try {
         this._requestRepository.add(request);
         res.send({ error: '', success: true }).end();
@@ -84,16 +111,21 @@ class AdminApi {
       res.end();
     });
 
+    /**
+     * Delete request
+     */
     app.delete('/request', (req: express.Request, res: express.Response) => {
-      const relativePath = req.body.relativePath;
+      const id = req.body.id;
 
-      if (!relativePath) {
+      if (!id) {
         res.statusCode = 500;
-        res.send({ error: 'Sorry, Missing parameter', success: false }).end();
+        res
+          .send({ error: 'Sorry, Missing parameter: id', success: false })
+          .end();
       }
 
       try {
-        this._requestRepository.remove(relativePath);
+        this._requestRepository.remove(id);
         res.send({ error: '', success: true }).end();
       } catch (e) {
         console.log(e);
