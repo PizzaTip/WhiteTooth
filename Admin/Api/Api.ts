@@ -61,7 +61,7 @@ class AdminApi {
     );
 
     /**
-     * Gets specific request
+     * Get specific request
      */
     app.get('/request/:id', (req: express.Request, res: express.Response) => {
       const id = req.params.id;
@@ -86,8 +86,15 @@ class AdminApi {
       res.end();
     });
 
+    /**
+     * Updates specific request
+     */
+    app.patch('/request/:id', (req: express.Request, res: express.Response) => {
+      const id = req.params.id;
+    });
+
     /*
-     * Adds new request to data source
+     * Adds new request
      */
     app.post('/request', (req: express.Request, res: express.Response) => {
       const name = req.body.name;
@@ -114,26 +121,29 @@ class AdminApi {
     /**
      * Delete request
      */
-    app.delete('/request', (req: express.Request, res: express.Response) => {
-      const id = req.body.id;
+    app.delete(
+      '/request/:id',
+      (req: express.Request, res: express.Response) => {
+        const id = req.params.id;
 
-      if (!id) {
-        res.statusCode = 500;
-        res
-          .send({ error: 'Sorry, Missing parameter: id', success: false })
-          .end();
+        if (!id) {
+          res.statusCode = 500;
+          res
+            .send({ error: 'Sorry, Missing parameter: id', success: false })
+            .end();
+        }
+
+        try {
+          this._requestRepository.remove(id);
+          res.send({ error: '', success: true }).end();
+        } catch (e) {
+          console.log(e);
+          res.send({ error: e, success: false }).end();
+        }
+
+        res.end();
       }
-
-      try {
-        this._requestRepository.remove(id);
-        res.send({ error: '', success: true }).end();
-      } catch (e) {
-        console.log(e);
-        res.send({ error: e, success: false }).end();
-      }
-
-      res.end();
-    });
+    );
 
     /**
      * Get all requests
