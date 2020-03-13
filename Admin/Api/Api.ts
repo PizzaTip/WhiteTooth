@@ -79,8 +79,10 @@ class AdminApi {
           .send(request)
           .end();
       } catch (e) {
-        console.log(e);
-        res.send({ error: e, success: false }).end();
+        res
+          .status(500)
+          .send(e)
+          .end();
       }
 
       res.end();
@@ -89,8 +91,29 @@ class AdminApi {
     /**
      * Updates specific request
      */
-    app.patch('/request/:id', (req: express.Request, res: express.Response) => {
+    app.put('/request/:id', (req: express.Request, res: express.Response) => {
       const id = req.params.id;
+      const name = req.body.name;
+      const relativePath = req.body.relativePath;
+
+      // validate all inputs supplied
+      if (!name || !relativePath) {
+        res.statusCode = 500;
+        res.send({ error: 'Sorry, Missing parameter', success: false }).end();
+      }
+
+      const request = new Request(id, relativePath, name);
+      try {
+        this._requestRepository.update(request);
+        res.send({ error: '', success: true }).end();
+      } catch (e) {
+        res
+          .status(500)
+          .send(e)
+          .end();
+      }
+
+      res.end();
     });
 
     /*
@@ -106,13 +129,15 @@ class AdminApi {
         res.send({ error: 'Sorry, Missing parameter', success: false }).end();
       }
 
-      let request = new Request(uuidv1(), relativePath, name);
+      const request = new Request(uuidv1(), relativePath, name);
       try {
         this._requestRepository.add(request);
         res.send({ error: '', success: true }).end();
       } catch (e) {
-        console.log(e);
-        res.send({ error: e, success: false }).end();
+        res
+          .status(500)
+          .send(e)
+          .end();
       }
 
       res.end();
@@ -127,8 +152,8 @@ class AdminApi {
         const id = req.params.id;
 
         if (!id) {
-          res.statusCode = 500;
           res
+            .status(500)
             .send({ error: 'Sorry, Missing parameter: id', success: false })
             .end();
         }
@@ -137,8 +162,10 @@ class AdminApi {
           this._requestRepository.remove(id);
           res.send({ error: '', success: true }).end();
         } catch (e) {
-          console.log(e);
-          res.send({ error: e, success: false }).end();
+          res
+            .status(500)
+            .send(e)
+            .end();
         }
 
         res.end();

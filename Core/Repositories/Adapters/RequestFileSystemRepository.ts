@@ -3,7 +3,7 @@ import Port = require('../Ports/IRequestRepository');
 import { Request } from '../../Models/request';
 
 class RequestRepository implements Port.IRequestRepository {
-  private _requestsConfigFilePath: string =
+  private readonly _requestsConfigFilePath: string =
     '../../Data/Requests/RequestsConfig.json';
 
   /**
@@ -56,6 +56,28 @@ class RequestRepository implements Port.IRequestRepository {
           throw error;
         }
         console.log('Request deleted!');
+      }
+    );
+  }
+
+  update(request: Request): void {
+    const allRequests = this.getAllRequests();
+    const requestIndex = allRequests.findIndex(req => req.id === request.id);
+    if (requestIndex < 0) {
+      throw 'Request not found!';
+    }
+
+    allRequests[requestIndex].relativePath = request.relativePath;
+    allRequests[requestIndex].name = request.name;
+
+    fs.writeFile(
+      this._requestsConfigFilePath,
+      JSON.stringify(allRequests),
+      error => {
+        if (error) {
+          throw error;
+        }
+        console.log('Request updated!');
       }
     );
   }
