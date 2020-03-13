@@ -3,6 +3,10 @@ import Port = require('../Ports/IRequestRepository');
 import { Request } from '../../Models/request';
 
 class RequestRepository implements Port.IRequestRepository {
+  /**
+   * Adds request to data source
+   * @param request rqeuest object to add
+   */
   add(request: Request): void {
     const allRequests = this.getAllRequests();
 
@@ -27,8 +31,33 @@ class RequestRepository implements Port.IRequestRepository {
     return;
   }
 
+  /**
+   * Deletes request from data source
+   * @param requestPath the path of the request to be deleted
+   */
   remove(requestPath: string): void {
-    throw new Error('Method not implemented.');
+    const allRequests = this.getAllRequests();
+
+    // validate request exists already
+    console.log(requestPath);
+    if (!allRequests.find(req => req.relativePath == requestPath)) {
+      throw 'Request not exists';
+    }
+
+    let filteredRequests = allRequests.filter(
+      req => req.relativePath != requestPath
+    );
+
+    fs.writeFile(
+      this._requestsConfigFilePath,
+      JSON.stringify(filteredRequests),
+      error => {
+        if (error) {
+          throw error;
+        }
+        console.log('Request deleted!');
+      }
+    );
   }
 
   get(requestPath: string): void {

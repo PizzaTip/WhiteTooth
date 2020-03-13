@@ -84,6 +84,25 @@ class AdminApi {
       res.end();
     });
 
+    app.delete('/request', (req: express.Request, res: express.Response) => {
+      const relativePath = req.body.relativePath;
+
+      if (!relativePath) {
+        res.statusCode = 500;
+        res.send({ error: 'Sorry, Missing parameter', success: false }).end();
+      }
+
+      try {
+        this._requestRepository.remove(relativePath);
+        res.send({ error: '', success: true }).end();
+      } catch (e) {
+        console.log(e);
+        res.send({ error: e, success: false }).end();
+      }
+
+      res.end();
+    });
+
     /**
      * Get all requests
      */
