@@ -35,7 +35,7 @@ class WhiteToothAPI {
     }
 
     parseRequestURL(url: string): ParsedRequest {
-        console.log(urlParts);
+        const urlParts = url.split("/");
         if (urlParts.length < 2)
             throw "Bad url format - should be: `environment/endpoint/...`";
 
