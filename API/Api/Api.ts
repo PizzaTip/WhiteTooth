@@ -20,18 +20,18 @@ class WhiteToothAPI {
 
         app.get('*', (req: express.Request, res: express.Response) => {
             try {
-                const parsedURL = this.parseRequestURL(req.url);
-                const environment = this._environmentRepository.getEnvironmentByName(parsedURL.environment);
-
+                const { environmentName, url} = this.parseRequestURL(req.url);
+                const environment = this._environmentRepository.getEnvironmentByName(environmentName);
+                
                 if (_.isEmpty(environment) || _.isEmpty(environment.responses))
-                    throw `Environment: ${parsedURL.environment} - not found`;
+                    throw `Environment: ${environmentName} - not found`;
 
-                const response = _.get(environment.responses, parsedURL.url, false);
+                const response = _.get(environment.responses, `${url}.get`, false);
 
                 if (response)
                     res.send(response);
                 else
-                    res.status(404).send(`${parsedURL.url} is not defined under ${parsedURL.environment} environment`);
+                    res.status(404).send(`${url} is not defined under ${environmentName} environment`);
             }
             catch (e){
                 res.status(500).send(e);
@@ -47,7 +47,7 @@ class WhiteToothAPI {
             throw "Bad url format - should be: `environment/endpoint/...`";
 
         const result =  {
-            environment: urlParts[1],
+            environmentName: urlParts[1],
             url: "/" + urlParts.slice(2).join("/")
         }
         return result;
@@ -55,7 +55,7 @@ class WhiteToothAPI {
 }
 
 interface ParsedRequest {
-    environment: string,
+    environmentName: string,
     url: string
 }
 
