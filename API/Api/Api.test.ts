@@ -22,25 +22,6 @@ describe('API TESTS', () => {
         expect(() => whitoothAPI.parseRequestURL(url)).toThrow()
     });
 
-    it('API - parseRequestURL url with two slashes should parse to environment name and url with one slash', () => {
-        //Arrange
-        const expectedEnvironemnt = "example_environemnt";
-        const expectedURL = "/test_url";
-
-        const expectedResult: ParsedRequest = {
-            environmentName: expectedEnvironemnt,
-            url: expectedURL
-        };
-
-        const urlToParse = `/${expectedEnvironemnt}${expectedURL}`;
-
-        //Act
-        const parsedURL = whitoothAPI.parseRequestURL(urlToParse);
-
-        //Assert
-        expect(parsedURL).toEqual(expectedResult);
-    });
-
     test.each([
         ["example_environemnt", "/test_url", 1],
         ["example_environemnt", "/test_url/1", 2],
