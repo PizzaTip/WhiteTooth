@@ -1,11 +1,8 @@
 import { IWhiteToothAPI, WhiteToothAPI, ParsedRequest} from './Api';
 import environmentRepositoryAdapter = require('../../Core/Repositories/Adapters/EnvironmentFileSystemRepository');
 
-jest.mock('../../Core/Repositories/Ports/IEnvironmentRepository');
-
 describe('API TESTS', () => {
 
-  
     let whitoothAPI: IWhiteToothAPI;
     beforeEach(() => {
         const port = 30000;
