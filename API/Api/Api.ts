@@ -3,7 +3,7 @@ import _ = require('lodash');
 import IEnvironmentRepository = require('../../Core/Repositories/Ports/IEnvironmentRepository');
 
 
-class WhiteToothAPI {
+class WhiteToothAPI implements IWhiteToothAPI {
     private readonly _port: number;
     private readonly _environmentRepository: IEnvironmentRepository.IEnvironmentRepository;
 
@@ -44,7 +44,7 @@ class WhiteToothAPI {
     parseRequestURL(url: string): ParsedRequest {
         const urlParts = url.split("/");
         if (urlParts.length < 3)
-            throw "Bad url format - should be: `environment/endpoint/...`";
+            throw new Error("Bad url format - should be: `environment/endpoint/...`");
 
         const result =  {
             environmentName: urlParts[1],
@@ -59,4 +59,10 @@ interface ParsedRequest {
     url: string
 }
 
-export { WhiteToothAPI }
+interface IWhiteToothAPI {
+    start: () => void,
+    parseRequestURL: (url:string) => ParsedRequest
+
+}
+
+export { WhiteToothAPI, IWhiteToothAPI }
