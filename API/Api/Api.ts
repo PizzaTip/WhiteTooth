@@ -65,4 +65,4 @@ interface IWhiteToothAPI {
 
 }
 
-export { WhiteToothAPI, IWhiteToothAPI }
+export { WhiteToothAPI, IWhiteToothAPI, ParsedRequest }
