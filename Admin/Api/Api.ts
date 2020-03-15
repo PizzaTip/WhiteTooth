@@ -99,13 +99,13 @@ class AdminApi {
       // validate all inputs supplied
       if (!name || !relativePath) {
         res.statusCode = 500;
-        res.send({ error: 'Sorry, Missing parameter', success: false }).end();
+        res.send({ error: 'Sorry, Missing parameter' }).end();
       }
 
       const request = new Request(id, relativePath, name);
       try {
         this._requestRepository.update(request);
-        res.send({ error: '', success: true }).end();
+        res.send({ error: '' }).end();
       } catch (e) {
         res
           .status(500)
@@ -126,13 +126,13 @@ class AdminApi {
       // validate all inputs supplied
       if (!name || !relativePath) {
         res.statusCode = 500;
-        res.send({ error: 'Sorry, Missing parameter', success: false }).end();
+        res.send({ error: 'Sorry, Missing parameter' }).end();
       }
 
       const request = new Request(uuidv1(), relativePath, name);
       try {
         this._requestRepository.add(request);
-        res.send({ error: '', success: true }).end();
+        res.send({ error: '' }).end();
       } catch (e) {
         res
           .status(500)
@@ -154,13 +154,13 @@ class AdminApi {
         if (!id) {
           res
             .status(500)
-            .send({ error: 'Sorry, Missing parameter: id', success: false })
+            .send({ error: 'Sorry, Missing parameter: id' })
             .end();
         }
 
         try {
           this._requestRepository.remove(id);
-          res.send({ error: '', success: true }).end();
+          res.send().end();
         } catch (e) {
           res
             .status(500)
