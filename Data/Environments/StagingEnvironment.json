@@ -3,11 +3,25 @@
   "relativePath": "/staging",
   "responses": {
     "/test": {
-      "get": {},
+      "get": {
+        "message": "This is get response for [get] Staging /test"
+      },
       "post": {}
     },
     "/load": {
-      "get": {}
+      "get": {
+        "message": "This is get response for [get] Staging /load"
+      }
+    },
+    "/load/1": {
+      "get": {
+        "message": "This is get response for [get] Staging /load/1"
+      }
+    },
+    "/load/main/1": {
+      "get": {
+        "message": "This is get response for [get] Staging /load/main/1"
+      }
     }
   }
 }

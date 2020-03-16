@@ -1,7 +1,9 @@
 import express = require('express');
+import _ = require('lodash');
 import IEnvironmentRepository = require('../../Core/Repositories/Ports/IEnvironmentRepository');
 
-class WhiteToothAPI {
+
+class WhiteToothAPI implements IWhiteToothAPI {
     private readonly _port: number;
     private readonly _environmentRepository: IEnvironmentRepository.IEnvironmentRepository;
 
@@ -18,13 +20,18 @@ class WhiteToothAPI {
 
         app.get('*', (req: express.Request, res: express.Response) => {
             try {
-                const parsedURL = this.parseRequestURL(req.url);
-                const environment = JSON.parse(this._environmentRepository.getEnvironmentByName(parsedURL.environment));
-                const response = environment.responses[parsedURL.url];
+                const { environmentName, url} = this.parseRequestURL(req.url);
+                const environment = this._environmentRepository.getEnvironmentByName(environmentName);
+                
+                if (_.isEmpty(environment) || _.isEmpty(environment.responses))
+                    throw `Environment: ${environmentName} - not found`;
+
+                const response = _.get(environment.responses, `${url}.get`, false);
+
                 if (response)
                     res.send(response);
                 else
-                    res.status(404).send("Not Found");
+                    res.status(404).send(`${url} is not defined under ${environmentName} environment`);
             }
             catch (e){
                 res.status(500).send(e);
@@ -36,21 +43,26 @@ class WhiteToothAPI {
 
     parseRequestURL(url: string): ParsedRequest {
         const urlParts = url.split("/");
-        if (urlParts.length !== 3)
-            throw "Bad url format - should be: `environment/endpoint`";
+        if (urlParts.length < 3)
+            throw new Error("Bad url format - should be: `environment/endpoint/...`");
 
         const result =  {
-            environment: urlParts[1],
-            url: `/${urlParts[2]}`
+            environmentName: urlParts[1],
+            url: "/" + urlParts.slice(2).join("/")
         }
-
         return result;
     }
 }
 
 interface ParsedRequest {
-    environment: string,
+    environmentName: string,
     url: string
 }
 
-export { WhiteToothAPI }
+interface IWhiteToothAPI {
+    start: () => void,
+    parseRequestURL: (url:string) => ParsedRequest
+
+}
+
+export { WhiteToothAPI, IWhiteToothAPI, ParsedRequest }
