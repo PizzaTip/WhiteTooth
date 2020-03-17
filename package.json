@@ -4,7 +4,8 @@
   "description": "Mock API for teams with multi environment support",
   "main": "index.js",
   "scripts": {
-    "test": "cd ./API/Api && npm i && npm test"
+    "test": "cd ./API/Api && npm i && npm test",
+	"whitetooth": "cd ./API/Api && npm i && npm run api"
   },
   "repository": {
     "type": "git",
