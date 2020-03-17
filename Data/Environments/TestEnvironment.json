@@ -2,8 +2,10 @@
   "name": "test",
   "relativePath": "/test",
   "responses": {
-    "/test": {
-      "get": {},
+    "/test-endpoint": {
+      "get": {
+        "result": "I am test endpoint on test environment [get]"
+      },
       "post": {}
     }
   }
