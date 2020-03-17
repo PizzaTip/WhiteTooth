@@ -1,0 +1,19 @@
+{
+  "name": "whitetooth-main",
+  "version": "1.0.0",
+  "description": "Mock API for teams with multi environment support",
+  "main": "index.js",
+  "scripts": {
+    "test": "cd ./API/Api && npm i && npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PizzaTip/WhiteTooth.git"
+  },
+  "author": "Elad Ben Shmuel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PizzaTip/WhiteTooth/issues"
+  },
+  "homepage": "https://github.com/PizzaTip/WhiteTooth#readme"
+}
