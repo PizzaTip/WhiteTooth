@@ -1,6 +1,4 @@
-# WhiteTooth - Mock API
-
-![WhiteTooth Mock API](https://github.com/PizzaTip/WhiteTooth/blob/master/Documentations/WhiteToothLogo.png?raw=true)
+# ![WhiteTooth Mock API](https://github.com/PizzaTip/WhiteTooth/blob/master/Documentations/WhiteToothLogo.png?raw=true) - Mock API
 
 Mock API for teams with multi environment support
 
