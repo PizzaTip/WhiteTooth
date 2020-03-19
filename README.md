@@ -2,7 +2,7 @@
 Mock API for teams with multi environment support
 
 ![WhiteTooth CI](https://github.com/PizzaTip/WhiteTooth/workflows/WhiteTooth%20CI/badge.svg)
-
+![WhiteTooth Mock API](https://github.com/PizzaTip/WhiteTooth/blob/master/Documentations/WhiteToothLogo.png?raw=true)
 ## Alpha Version
 This vesrion already supports basic fetures of the planned features for WhithTooth.
 
