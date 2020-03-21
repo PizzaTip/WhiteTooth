@@ -1,8 +1,8 @@
 import fs = require('fs');
-import Port = require('../Ports/IEnvironmentRepository');
 import path = require('path');
+import { IEnvironmentRepository } from '../Ports/IEnvironmentRepository';
 
-class EnvironmentRepository implements Port.IEnvironmentRepository {
+class EnvironmentRepository implements IEnvironmentRepository {
   private _environmentsDirectoryPath: string = '../../Data/Environments';
 
   /**
@@ -28,7 +28,7 @@ class EnvironmentRepository implements Port.IEnvironmentRepository {
     const path = `${this._environmentsDirectoryPath}/${environmentName}Environment.json`;
     console.log(`Getting ${environmentName} environment...`);
     if (fs.existsSync(path)) {
-        return JSON.parse(fs.readFileSync(path, 'utf8'));
+      return JSON.parse(fs.readFileSync(path, 'utf8'));
     } else {
       return null;
     }

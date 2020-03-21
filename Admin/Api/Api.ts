@@ -1,18 +1,18 @@
 import express = require('express');
-import IEnvironmentRepository = require('../../Core/Repositories/Ports/IEnvironmentRepository');
-import IRequestRepository = require('../../Core/Repositories/Ports/IRequestRepository');
+import { IEnvironmentRepository } from '../../Core/Repositories/Ports/IEnvironmentRepository';
+import { IRequestRepository } from '../../Core/Repositories/Ports/IRequestRepository';
 import { Request } from '../../Core/Models/request';
 import { v1 as uuidv1 } from 'uuid';
 
 class AdminApi {
   private readonly _port: number;
-  private readonly _environmentRepository: IEnvironmentRepository.IEnvironmentRepository;
-  private readonly _requestRepository: IRequestRepository.IRequestRepository;
+  private readonly _environmentRepository: IEnvironmentRepository;
+  private readonly _requestRepository: IRequestRepository;
 
   constructor(
     port: number,
-    requestRepository: IRequestRepository.IRequestRepository,
-    envirnemntRepository: IEnvironmentRepository.IEnvironmentRepository
+    requestRepository: IRequestRepository,
+    envirnemntRepository: IEnvironmentRepository
   ) {
     this._port = port;
     this._environmentRepository = envirnemntRepository;
