@@ -2,7 +2,7 @@ import { AdminApi } from './Api';
 import { RequestRepository } from '../../Core/Repositories/Adapters/RequestFileSystemRepository';
 import { EnvironmentRepository } from '../../Core/Repositories/Adapters/EnvironmentFileSystemRepository';
 
-const port = 3100;
+const port = process.env.PORT || '3100';
 
 // create repositries
 const requestRepository: RequestRepository = new RequestRepository();
