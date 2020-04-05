@@ -1,7 +1,7 @@
-import e  = require('./response');
+import { Response } from './response';
 
 export interface Environment {
-    name: string,
-    relativePath: string,
-    responses: [e.Response]
+  name: string;
+  relativePath: string;
+  responses: [Response];
 }

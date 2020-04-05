@@ -1,16 +1,12 @@
-import api = require('./Api');
-import requestRepositoryAdapter = require('../../Core/Repositories/Adapters/RequestFileSystemRepository');
-import environmentRepositoryAdapter = require('../../Core/Repositories/Adapters/EnvironmentFileSystemRepository');
+import { AdminApi } from './Api';
+import { RequestRepository } from '../../Core/Repositories/Adapters/RequestFileSystemRepository';
+import { EnvironmentRepository } from '../../Core/Repositories/Adapters/EnvironmentFileSystemRepository';
 
-const port = 3100;
+const port = process.env.PORT || '3100';
 
 // create repositries
-const requestRepository: requestRepositoryAdapter.RequestRepository = new requestRepositoryAdapter.RequestRepository();
-const environmentRepository: environmentRepositoryAdapter.EnvironmentRepository = new environmentRepositoryAdapter.EnvironmentRepository();
+const requestRepository: RequestRepository = new RequestRepository();
+const environmentRepository: EnvironmentRepository = new EnvironmentRepository();
 
-const adminApi = new api.AdminApi(
-  port,
-  requestRepository,
-  environmentRepository
-);
+const adminApi = new AdminApi(port, requestRepository, environmentRepository);
 adminApi.start();

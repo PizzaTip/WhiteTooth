@@ -5,16 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "cd ./API/Api && npm i && npm test",
-	"whitetooth": "cd ./API/Api && npm i && npm run api"
+    "whitetooth": "cd ./API/Api && npm i && npm run api",
+    "wt-admin-ui": "cd ./Admin/Client && npm i &&  npm run start",
+    "wt-admin-api": "cd ./Admin/Api && npm i &&  npm run admin",
+    "wt-admin": "npm-run-all --parallel wt-admin-ui wt-admin-api"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PizzaTip/WhiteTooth.git"
   },
-  "author": "Elad Ben Shmuel",
+  "author": "PizzaTip",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/PizzaTip/WhiteTooth/issues"
   },
-  "homepage": "https://github.com/PizzaTip/WhiteTooth#readme"
+  "homepage": "https://github.com/PizzaTip/WhiteTooth#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
