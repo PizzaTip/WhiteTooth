@@ -1,27 +1,24 @@
 {
   "name": "staging",
   "relativePath": "/staging",
-  "responses": {
-    "/test": {
-      "get": {
-        "message": "This is get response for [get] Staging /test"
-      },
-      "post": {}
-    },
-    "/load": {
-      "get": {
-        "message": "This is get response for [get] Staging /load"
+  "responses": [
+    {
+      "relativepath": "/test",
+      "method": "get",
+      "responseData": {
+        "statusCode": 200,
+        "body": "This is get response for [get] Staging /test",
+        "headers": ""
       }
     },
-    "/load/1": {
-      "get": {
-        "message": "This is get response for [get] Staging /load/1"
-      }
-    },
-    "/load/main/1": {
-      "get": {
-        "message": "This is get response for [get] Staging /load/main/1"
+    {
+      "relativepath": "/test2",
+      "method": "get",
+      "responseData": {
+        "statusCode": 200,
+        "body": "This is get response for [get] Staging /test2",
+        "headers": ""
       }
     }
-  }
+  ]
 }

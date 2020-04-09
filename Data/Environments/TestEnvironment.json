@@ -1,12 +1,15 @@
 {
   "name": "test",
   "relativePath": "/test",
-  "responses": {
-    "/test-endpoint": {
-      "get": {
-        "result": "I am test endpoint on test environment [get]"
-      },
-      "post": {}
+  "responses": [
+    {
+      "relativepath": "/test-endpoint",
+      "method": "get",
+      "responseData": {
+        "statusCode": 200,
+        "body": "This is get response for [get] test /test-endpoint",
+        "headers": ""
+      }
     }
-  }
+  ]
 }
