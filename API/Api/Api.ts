@@ -1,6 +1,7 @@
 import express = require('express');
 import _ = require('lodash');
 import { IEnvironmentRepository } from '../../Core/Repositories/Ports/IEnvironmentRepository';
+import { Environment, EnvironmentResponseExtractor } from '../../Core/Models/environment';
 
 class WhiteToothAPI implements IWhiteToothAPI {
   private readonly _port: number;
@@ -17,16 +18,17 @@ class WhiteToothAPI implements IWhiteToothAPI {
     app.get('*', (req: express.Request, res: express.Response) => {
       try {
         const { environmentName, url } = this.parseRequestURL(req.url);
-        const environment = this._environmentRepository.getEnvironmentByName(
+        const environment:Environment = this._environmentRepository.getEnvironmentByName(
           environmentName
         );
 
         if (_.isEmpty(environment) || _.isEmpty(environment.responses))
           throw `Environment: ${environmentName} - not found`;
 
-        const response = _.get(environment.responses, `${url}.get`, false);
+          const response = new EnvironmentResponseExtractor(environment.responses, 'get', url).get();
 
-        if (response) res.send(response);
+          if (response) res.status(response.responseData.statusCode)
+              .send(response.responseData.body);
         else
           res
             .status(404)
