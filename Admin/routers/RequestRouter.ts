@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
-import { WTRequestFactory } from '../../../Core/Models/request';
-import { IRequestRepository } from '../../../Core/Repositories/Ports/IRequestRepository';
+import { WTRequestFactory } from '../../Core/Models/request';
+import { IRequestRepository } from '../../Core/Repositories/Ports/IRequestRepository';
 import { v1 as uuidv1 } from 'uuid';
 
 export function requestRouter(repository: IRequestRepository) {
@@ -14,20 +14,11 @@ export function requestRouter(repository: IRequestRepository) {
         try {
             const request = repository.get(id);
             if (!request) {
-                res
-                    .status(404)
-                    .send('Request object not found')
-                    .end();
+                res.status(404).send('Request object not found').end();
             }
-            res
-                .header('Content-Type', 'application/json')
-                .send(request)
-                .end();
+            res.header('Content-Type', 'application/json').send(request).end();
         } catch (e) {
-            res
-                .status(500)
-                .send(e)
-                .end();
+            res.status(500).send(e).end();
         }
 
         res.end();
@@ -42,10 +33,10 @@ export function requestRouter(repository: IRequestRepository) {
 
     // Updates specific request
     router.put(`/${routePath}/:id`, (req: Request, res: Response) => {
-        const id:string = req.params.id;
+        const id: string = req.params.id;
         const name: string = req.body.name;
         const url: string = req.body.relativePath;
-        
+
         // validate all inputs supplied
         if (!name || !url) {
             res.statusCode = 500;
@@ -60,10 +51,7 @@ export function requestRouter(repository: IRequestRepository) {
             repository.update(request);
             res.send(request).end();
         } catch (e) {
-            res
-                .status(500)
-                .send(e)
-                .end();
+            res.status(500).send(e).end();
         }
 
         res.send(request).end();
@@ -79,17 +67,20 @@ export function requestRouter(repository: IRequestRepository) {
             res.statusCode = 500;
             res.send({ error: 'Sorry, Missing parameter' }).end();
         }
-        const responseForRequest = { body: "", headers: {}, status: 200 };
-        const request = WTRequestFactory.Create(uuidv1(), name, relativePath, "GET", responseForRequest);
+        const responseForRequest = { body: '', headers: {}, status: 200 };
+        const request = WTRequestFactory.Create(
+            uuidv1(),
+            name,
+            relativePath,
+            'GET',
+            responseForRequest
+        );
 
         try {
             repository.add(request);
             res.send(request).end();
         } catch (e) {
-            res
-                .status(500)
-                .send(e)
-                .end();
+            res.status(500).send(e).end();
         }
 
         res.send(request).end();
@@ -100,8 +91,7 @@ export function requestRouter(repository: IRequestRepository) {
         const id = req.params.id;
 
         if (!id) {
-            res
-                .status(500)
+            res.status(500)
                 .send({ error: 'Sorry, Missing parameter: id' })
                 .end();
         }
@@ -110,10 +100,7 @@ export function requestRouter(repository: IRequestRepository) {
             repository.remove(id);
             res.send(id).end();
         } catch (e) {
-            res
-                .status(500)
-                .send(e)
-                .end();
+            res.status(500).send(e).end();
         }
 
         res.send(id).end();
