@@ -82,7 +82,7 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
         );
     }
 
-    get(id: string): Request | undefined {
+    get(id: string): Request | never {
         const allRequests = this.getAllRequests();
 
         const request = allRequests.find(req => req.id === id);

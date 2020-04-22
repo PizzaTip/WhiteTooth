@@ -1,15 +1,1 @@
-[
-  {
-    "id": "example",
-    "url": "example",
-    "name": "example - name",
-    "method": "GET",
-    "response": {
-      "headers": {
-        "Content-Type": "application/json"
-      },
-      "status": 200,
-      "body": "['example', 'response']"
-    }
-  }
-]
+[{"id":"example","url":"example","name":"example - name","method":"GET","response":{"headers":{"Content-Type":"application/json"},"status":200,"body":"['example', 'response']"}},{"id":"4079dd20-84a5-11ea-8a76-d771bd1c8f2f","name":"test","url":"/test","method":"GET","response":{"body":"","headers":{},"status":200}}]

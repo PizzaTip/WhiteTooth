@@ -3,7 +3,7 @@ interface Request {
     name: string;
     url: string;
     method: string;
-    response: Response
+    response: Response;
 }
 
 interface Response {
@@ -12,4 +12,14 @@ interface Response {
     body: string
 }
 
-export { Request };
+class WTRequestFactory {
+    static Create = (id: string, name: string, url: string, method: string, response: Response): Request => ({
+        id,
+        name,
+        url,
+        method,
+        response
+    });
+}
+
+export { Request, WTRequestFactory };
