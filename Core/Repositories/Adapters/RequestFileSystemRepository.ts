@@ -2,108 +2,118 @@ import fs = require('fs');
 import Port = require('../Ports/IRequestRepository');
 import { Request } from '../../Models/request';
 
-class RequestRepository implements Port.IRequestRepository {
-  private readonly REQUESTS_FILE_PATH: string =
-    '../../Data/Requests/RequestsConfig.json';
+class RequestFileSystemRepository implements Port.IRequestRepository {
+    private readonly REQUESTS_FILE_PATH: string =
+        '../../Data/db.json';
 
-  /**
-   * Adds request to data source
-   * @param request rqeuest object to add
-   */
-  add(request: Request): void {
-    const allRequests = this.getAllRequests();
+    /**
+     * Adds request to data source
+     * @param request rqeuest object to add
+     */
+    add(request: Request): void {
+        const allRequests = this.getAllRequests();
 
-    // validate request not exists already
-    if (allRequests.find(req => req.relativePath === request.relativePath)) {
-      throw 'Unable to add request - Request already exists';
-    }
-
-    allRequests.push(request);
-
-    fs.writeFile(
-      this.REQUESTS_FILE_PATH,
-      JSON.stringify(allRequests),
-      error => {
-        if (error) {
-          throw error;
+        // validate request not exists already
+        if (allRequests.find(req => req.url === request.url)) {
+            throw 'Unable to add request - Request already exists';
         }
-        console.log('New request added!');
-      }
-    );
 
-    return;
-  }
+        allRequests.push(request);
 
-  /**
-   * Deletes request from data source by id
-   * @param id id of the request to be deleted
-   */
-  remove(id: string): void {
-    const allRequests = this.getAllRequests();
+        fs.writeFile(
+            this.REQUESTS_FILE_PATH,
+            JSON.stringify(allRequests),
+            error => {
+                if (error) {
+                    throw error;
+                }
+                console.log('New request added!');
+            }
+        );
 
-    // validate request exists already
-    if (!allRequests.find(req => req.id == id)) {
-      throw 'Request not exists';
+        return;
     }
 
-    let filteredRequests = allRequests.filter(req => req.id != id);
+    /**
+     * Deletes request from data source by id
+     * @param id id of the request to be deleted
+     */
+    remove(id: string): void {
+        const allRequests = this.getAllRequests();
 
-    fs.writeFile(
-      this.REQUESTS_FILE_PATH,
-      JSON.stringify(filteredRequests),
-      error => {
-        if (error) {
-          throw error;
+        // validate request exists already
+        if (!allRequests.find(req => req.id == id)) {
+            throw 'Request not exists';
         }
-        console.log('Request deleted!');
-      }
-    );
-  }
 
-  update(request: Request): void {
-    const allRequests = this.getAllRequests();
-    const requestIndex = allRequests.findIndex(req => req.id === request.id);
-    if (requestIndex < 0) {
-      throw 'Request not found!';
+        let filteredRequests = allRequests.filter(req => req.id != id);
+
+        fs.writeFile(
+            this.REQUESTS_FILE_PATH,
+            JSON.stringify(filteredRequests),
+            error => {
+                if (error) {
+                    throw error;
+                }
+                console.log('Request deleted!');
+            }
+        );
     }
 
-    allRequests[requestIndex].relativePath = request.relativePath;
-    allRequests[requestIndex].name = request.name;
-
-    fs.writeFile(
-      this.REQUESTS_FILE_PATH,
-      JSON.stringify(allRequests),
-      error => {
-        if (error) {
-          throw error;
+    update(request: Request): void {
+        const allRequests = this.getAllRequests();
+        const requestIndex = allRequests.findIndex(req => req.id === request.id);
+        if (requestIndex < 0) {
+            throw 'Request not found!';
         }
-        console.log('Request updated!');
-      }
-    );
-  }
 
-  get(id: string): Request | undefined {
-    const allRequests = this.getAllRequests();
+        allRequests[requestIndex].url = request.url;
+        allRequests[requestIndex].name = request.name;
 
-    const request = allRequests.find(req => req.id === id);
-    if (!request) {
-      throw 'Request did not found';
+        fs.writeFile(
+            this.REQUESTS_FILE_PATH,
+            JSON.stringify(allRequests),
+            error => {
+                if (error) {
+                    throw error;
+                }
+                console.log('Request updated!');
+            }
+        );
     }
 
-    return request;
-  }
+    get(id: string): Request | never {
+        const allRequests = this.getAllRequests();
 
-  /**
-   * Returns all requests types
-   */
-  public getAllRequests(): Request[] {
-    console.log(`Getting requests...`);
-    let buffer = fs.readFileSync(this.REQUESTS_FILE_PATH, 'utf8');
-    if (buffer.length === 0) {
-      return JSON.parse('[]');
+        const request = allRequests.find(req => req.id === id);
+        if (!request) {
+            throw 'Request did not found';
+        }
+
+        return request;
     }
-    return JSON.parse(fs.readFileSync(this.REQUESTS_FILE_PATH, 'utf8'));
-  }
+
+    getByUrlAndMethod(url: string, method: string): Request | never {
+        const allRequests = this.getAllRequests();
+        const request = allRequests.find(req => req.url === url && req.method === method);
+        if (!request) {
+            throw 'Request did not found for url';
+        }
+
+        return request;
+    }
+
+    /**
+     * Returns all requests types
+     */
+    public getAllRequests(): Request[] {
+        console.log(`Getting requests...`);
+        let buffer = fs.readFileSync(this.REQUESTS_FILE_PATH, 'utf8');
+        if (buffer.length === 0) {
+            return JSON.parse('[]');
+        }
+        return JSON.parse(fs.readFileSync(this.REQUESTS_FILE_PATH, 'utf8'));
+    }
 }
 
-export { RequestRepository };
+export { RequestFileSystemRepository };

@@ -1,46 +1,24 @@
-import { IWhiteToothAPI, WhiteToothAPI, ParsedRequest} from './Api';
-import environmentRepositoryAdapter = require('../../Core/Repositories/Adapters/EnvironmentFileSystemRepository');
+import { IWhiteToothAPI, WhiteToothAPI } from './Api';
+import { RequestFileSystemRepository } from '../../Core/Repositories/Adapters/RequestFileSystemRepository';
 
 describe('API TESTS', () => {
 
     let whitoothAPI: IWhiteToothAPI;
     beforeEach(() => {
         const port = 30000;
-        const environmentRepository = new environmentRepositoryAdapter.EnvironmentRepository();
+        const requestFileSystemRepository = new RequestFileSystemRepository();
 
         whitoothAPI = new WhiteToothAPI(
             port,
-            environmentRepository
+            requestFileSystemRepository
         );
     });
 
-    it('API - parseRequestURL should throw an exception if URL has less than 2 slashes', () => {
+    it('API - parseRequestURL should throw an exception if URL has less than 1 slashe', () => {
         //Arrange
-        const url = "/example_environemnt";
+        const url = "example_environemnt";
 
         //Act + Assert
         expect(() => whitoothAPI.parseRequestURL(url)).toThrow()
-    });
-
-    test.each([
-        ["example_environemnt", "/test_url", 1],
-        ["example_environemnt", "/test_url/1", 2],
-        ["example_environemnt", "/test_url/1/2", 3],
-        ["example_environemnt", "/test_url/1/2/3", 4],
-    ])('API - parseRequestURL given URL: `/%s%s` result url should contain:%i salshes ', (environmentName, url, expectedSlashesInURL) => {
-        //Arrange
-        const expectedResult: ParsedRequest = {
-            environmentName: environmentName,
-            url: url
-        };
-
-        const urlToParse = `/${environmentName}${url}`;
-
-        //Act
-        const parsedURL = whitoothAPI.parseRequestURL(urlToParse);
-
-        //Assert
-        expect(parsedURL).toEqual(expectedResult);
-        expect(parsedURL.url.split("/").length - 1).toBe(expectedSlashesInURL);
     });
 });
