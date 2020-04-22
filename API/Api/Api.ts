@@ -1,69 +1,53 @@
 import express = require('express');
 import _ = require('lodash');
-import { IEnvironmentRepository } from '../../Core/Repositories/Ports/IEnvironmentRepository';
-import { Environment, EnvironmentResponseExtractor } from '../../Core/Models/environment';
+import { IRequestRepository } from '../../Core/Repositories/Ports/IRequestRepository';
 
 class WhiteToothAPI implements IWhiteToothAPI {
-  private readonly _port: number;
-  private readonly _environmentRepository: IEnvironmentRepository;
+    private readonly _port: number;
+    private readonly _requestRepository: IRequestRepository;
 
-  constructor(port: number, envirnemntRepository: IEnvironmentRepository) {
-    this._port = port;
-    this._environmentRepository = envirnemntRepository;
-  }
+    constructor(port: number, requestRepository: IRequestRepository) {
+        this._port = port;
+        this._requestRepository = requestRepository;
+    }
 
-  start() {
-    const app: express.Application = express();
+    start() {
+        const app: express.Application = express();
 
-    app.get('*', (req: express.Request, res: express.Response) => {
-      try {
-        const { environmentName, url } = this.parseRequestURL(req.url);
-        const environment:Environment = this._environmentRepository.getEnvironmentByName(
-          environmentName
+        app.get('*', (req: express.Request, res: express.Response) => {
+            try {
+                const url = this.parseRequestURL(req.url);
+
+                const request = this._requestRepository.getByUrlAndMethod(url, 'GET');
+                console.log(request);
+                const response = request.response;
+                res.status(response.status);
+                for (let [headerName, headerValue] of Object.entries(response.headers))
+                    res.setHeader(headerName, headerValue);
+
+                res.send(response.body);
+            } catch (e) {
+                res.status(500).send(e);
+            }
+        });
+
+        app.listen(this._port, () =>
+            console.log(`WhiteTooth API is listening on port ${this._port}!`)
         );
+    }
 
-        if (_.isEmpty(environment) || _.isEmpty(environment.responses))
-          throw `Environment: ${environmentName} - not found`;
+    parseRequestURL(url: string): string {
+        const urlParts = url.split('/');
+        if (urlParts.length < 2)
+            throw new Error('Bad url format - should be: `/endpoint`');
 
-          const response = new EnvironmentResponseExtractor(environment.responses, 'get', url).get();
-
-          if (response) res.status(response.responseData.statusCode)
-              .send(response.responseData.body);
-        else
-          res
-            .status(404)
-            .send(`${url} is not defined under ${environmentName} environment`);
-      } catch (e) {
-        res.status(500).send(e);
-      }
-    });
-
-    app.listen(this._port, () =>
-      console.log(`WhiteTooth API is listening on port ${this._port}!`)
-    );
-  }
-
-  parseRequestURL(url: string): ParsedRequest {
-    const urlParts = url.split('/');
-    if (urlParts.length < 3)
-      throw new Error('Bad url format - should be: `environment/endpoint/...`');
-
-    const result = {
-      environmentName: urlParts[1],
-      url: '/' + urlParts.slice(2).join('/')
-    };
-    return result;
-  }
-}
-
-interface ParsedRequest {
-  environmentName: string;
-  url: string;
+        return urlParts[1]
+    }
 }
 
 interface IWhiteToothAPI {
-  start: () => void;
-  parseRequestURL: (url: string) => ParsedRequest;
+    start: () => void;
+    parseRequestURL: (url: string) => string;
 }
 
-export { WhiteToothAPI, IWhiteToothAPI, ParsedRequest };
+export { WhiteToothAPI, IWhiteToothAPI };

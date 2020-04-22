@@ -1,7 +1,7 @@
 # WhiteTooth - Mock API
 ![WhiteTooth Mock API](https://github.com/PizzaTip/WhiteTooth/blob/master/Documentations/WhiteToothLogo.png?raw=true)
 
-Mock API for teams with multi environment support
+100% Web based Mock API - free for use
 
 ![WhiteTooth CI](https://github.com/PizzaTip/WhiteTooth/workflows/WhiteTooth%20CI/badge.svg)
 ## Alpha Version
@@ -14,7 +14,7 @@ This vesrion already supports basic fetures of the planned features for WhithToo
 ### How to run the Mock API server?
 Using your favourite shell pointed to `/API/Api` folder run `npm run api` and a basic mock API will be available on port 3000.
 
-#### Configure an environment
+#### Configure an environment (*Future feature*)
 Create new file `<environment_name>Environment.json` in the `Data/Environments` folder.
 You can see the exiting examples of `StagingEnvironment.json` and `TestEnvironment.json`.
 

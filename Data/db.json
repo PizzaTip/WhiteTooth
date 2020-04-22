@@ -1,0 +1,15 @@
+[
+  {
+    "id": "example",
+    "url": "example",
+    "name": "example - name",
+    "method": "GET",
+    "response": {
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "status": 200,
+      "body": "['example', 'response']"
+    }
+  }
+]

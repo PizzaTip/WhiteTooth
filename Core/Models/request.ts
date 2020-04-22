@@ -1,13 +1,15 @@
-class Request {
-  public id: string;
-  public name: string;
-  public relativePath: string;
+interface Request {
+    id: string;
+    name: string;
+    url: string;
+    method: string;
+    response: Response
+}
 
-  constructor(id: string, relativePath: string, name: string) {
-    this.id = id;
-    this.name = name;
-    this.relativePath = relativePath;
-  }
+interface Response {
+    headers: { [key: string]: number | string }
+    status: number,
+    body: string
 }
 
 export { Request };
