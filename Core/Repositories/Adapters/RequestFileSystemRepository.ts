@@ -3,8 +3,7 @@ import Port = require('../Ports/IRequestRepository');
 import { Request } from '../../Models/request';
 
 class RequestFileSystemRepository implements Port.IRequestRepository {
-    private readonly REQUESTS_FILE_PATH: string =
-        '../../Data/db.json';
+    private readonly REQUESTS_FILE_PATH: string = '../Data/db.json';
 
     /**
      * Adds request to data source
@@ -14,7 +13,7 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
         const allRequests = this.getAllRequests();
 
         // validate request not exists already
-        if (allRequests.find(req => req.url === request.url)) {
+        if (allRequests.find((req) => req.url === request.url)) {
             throw 'Unable to add request - Request already exists';
         }
 
@@ -23,7 +22,7 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
         fs.writeFile(
             this.REQUESTS_FILE_PATH,
             JSON.stringify(allRequests),
-            error => {
+            (error) => {
                 if (error) {
                     throw error;
                 }
@@ -42,16 +41,16 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
         const allRequests = this.getAllRequests();
 
         // validate request exists already
-        if (!allRequests.find(req => req.id == id)) {
+        if (!allRequests.find((req) => req.id == id)) {
             throw 'Request not exists';
         }
 
-        let filteredRequests = allRequests.filter(req => req.id != id);
+        let filteredRequests = allRequests.filter((req) => req.id != id);
 
         fs.writeFile(
             this.REQUESTS_FILE_PATH,
             JSON.stringify(filteredRequests),
-            error => {
+            (error) => {
                 if (error) {
                     throw error;
                 }
@@ -62,7 +61,9 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
 
     update(request: Request): void {
         const allRequests = this.getAllRequests();
-        const requestIndex = allRequests.findIndex(req => req.id === request.id);
+        const requestIndex = allRequests.findIndex(
+            (req) => req.id === request.id
+        );
         if (requestIndex < 0) {
             throw 'Request not found!';
         }
@@ -73,7 +74,7 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
         fs.writeFile(
             this.REQUESTS_FILE_PATH,
             JSON.stringify(allRequests),
-            error => {
+            (error) => {
                 if (error) {
                     throw error;
                 }
@@ -85,7 +86,7 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
     get(id: string): Request | never {
         const allRequests = this.getAllRequests();
 
-        const request = allRequests.find(req => req.id === id);
+        const request = allRequests.find((req) => req.id === id);
         if (!request) {
             throw 'Request did not found';
         }
@@ -95,7 +96,9 @@ class RequestFileSystemRepository implements Port.IRequestRepository {
 
     getByUrlAndMethod(url: string, method: string): Request | never {
         const allRequests = this.getAllRequests();
-        const request = allRequests.find(req => req.url === url && req.method === method);
+        const request = allRequests.find(
+            (req) => req.url === url && req.method === method
+        );
         if (!request) {
             throw 'Request did not found for url';
         }

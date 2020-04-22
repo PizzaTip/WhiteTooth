@@ -1,0 +1,25 @@
+{
+    "name": "whitethoothadmin",
+    "version": "1.0.0",
+    "description": "Mock API for teams with multi environment support",
+    "main": "index.js",
+    "scripts": {
+        "client": "npm start --prefix client",
+        "api": "npm run build && node ./build/Admin/Api.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc",
+        "admin": "concurrently \"npm run api\" \"npm run client\""
+    },
+    "author": "PizzaTip",
+    "license": "MIT",
+    "dependencies": {
+        "@types/express": "^4.17.2",
+        "@types/uuid": "^7.0.0",
+        "express": "^4.17.1",
+        "typescript": "^3.7.5",
+        "uuid": "^7.0.2"
+    },
+    "devDependencies": {
+        "concurrently": "^5.1.0"
+    }
+}
