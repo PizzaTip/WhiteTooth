@@ -4,7 +4,12 @@ function delay(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const realLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => { throw "Implement Real API" }; 
+const realLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => {
+    if (username !== "else" && password !== "else")
+        return Promise.reject("Implement Real API");
+    else
+        return Promise.resolve("This is fake token");
+}; 
 const mockLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => {
     return delay(3000).then(() => {
         if (username === "mock" && password === "mock")
