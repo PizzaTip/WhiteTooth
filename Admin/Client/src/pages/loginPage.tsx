@@ -2,7 +2,6 @@
 import styled from 'styled-components';
 import logo from '../static/WhiteToothLogo.png';
 import { Form, Button, Alert } from 'react-bootstrap';
-import Authentication from '../authentication';
 import { Redirect } from 'react-router';
 
 type Props = {
@@ -50,7 +49,7 @@ const LoginPage = (props: Props) => {
         props.isAuthenticated ? <Redirect to="/" /> :
             <LoginPageWrapper>
                 <LoginPageTitle>Login</LoginPageTitle>
-                <img src={logo} /><br />
+                <img src={logo} alt="WhiteTooth" /><br />
                 {displayError ? <Alert variant="danger">
                     <Alert.Heading>Oh snap!</Alert.Heading>
                     {displayError}
