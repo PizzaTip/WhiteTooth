@@ -7,10 +7,8 @@
     "test": "cd ./API/Api && npm i && npm test",
     "install-admin-server": "cd ./Admin/ && npm i",
     "install-admin-ui": "cd ./Admin/Client && npm i",
-
     "build-admin-server": "cd ./Admin/ && npm run build",
     "build-admin-ui": "cd ./Admin/Client && npm run build",
-
     "prebuild-admin-all": "npm-run-all --parallel install-admin-server install-admin-ui",
     "build-admin-all": "npm-run-all --parallel build-admin-server build-admin-ui",
     "whitetooth": "cd ./API/Api && npm i && npm run api",
