@@ -7,7 +7,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
     Redirect
 } from "react-router-dom";
 import MainPage from './pages/mainPage';
@@ -35,7 +34,7 @@ function App() {
     useEffect(() => {
         if (Authentication.IsAuthenticated())
             setLoginStatus(true);
-    });
+    }, [isLoggedin]);
 
     return <div className='App'>
         <Router>
