@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../static/WhiteToothLogo.png';
 import { Form, Button, Alert } from 'react-bootstrap';
@@ -91,7 +91,7 @@ const LoginPageWrapper = styled.div`
 `
 
 const LoginPageTitle = styled.h1`
-    
+   text-decoration: underline;
 `
 
 const FormWrapper = styled.div`

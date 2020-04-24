@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InitSideEffects from './sideEffects/initSideEffects';
 import LoginPage from './pages/loginPage';
 import Authentication from './authentication';
@@ -31,6 +31,11 @@ function App() {
                 onSuccess();
             });
     }
+
+    useEffect(() => {
+        if (Authentication.IsAuthenticated())
+            setLoginStatus(true);
+    });
 
     return <div className='App'>
         <Router>

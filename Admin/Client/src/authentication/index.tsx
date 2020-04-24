@@ -1,10 +1,13 @@
 import SideEffectJs from 'side-effect-js';
+import Cookies from 'universal-cookie';
 import { LoginSideEffectType } from '../sideEffects/authentication/loginSideEffect';
+
 export default class Authentication {
-    private static _token: string = '';
+    private static COOKIE_NAME: string = "wtAuthToken"; 
+    private static _cookies = new Cookies();
 
     public static IsAuthenticated() {
-        return this._token !== '';
+        return this._cookies.get(this.COOKIE_NAME) && this._cookies.get(this.COOKIE_NAME) !== '';
     }
 
     public static async AuthenticateAsync(username: string, password: string): Promise<string> {
@@ -18,7 +21,11 @@ export default class Authentication {
             .catch((error: string) => { return Promise.reject(error) });
     }
 
+    public static Logout() {
+        this._cookies.remove(this.COOKIE_NAME);
+    }
+
     private static SetToken(token: string) {
-        this._token = token;
+        this._cookies.set(this.COOKIE_NAME, token);
     }
 }
