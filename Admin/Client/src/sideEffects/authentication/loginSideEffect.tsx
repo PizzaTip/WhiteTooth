@@ -6,7 +6,7 @@ function delay(ms:number) {
 
 const realLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => {
     if (username !== "else" && password !== "else")
-        throw "Implement Real API";
+        return Promise.reject("Implement Real API");
     else
         return Promise.resolve("This is fake token");
 }; 
