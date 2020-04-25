@@ -12,6 +12,9 @@ const RequestForm = (props: Props) => {
 };
 
 const Content = styled.div`
+  background-color: #d1cbcb;
+  min-height: 100vh;
+  width: 100%;
   padding: 30px;
   position: fixed;
   left: 300px;

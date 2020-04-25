@@ -6,7 +6,7 @@ import HttpMethodBadges from '../shared/HttpMethodBadges';
 type Props = {
   request: Request;
   isSelected: Boolean;
-  onRequestSeleceted: Function;
+  onRequestSeleceted: (request: Request) => void;
 };
 
 interface SideBarItemProps {

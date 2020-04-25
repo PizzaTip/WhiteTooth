@@ -6,13 +6,14 @@ import RequestBarItem from './requestBarItem';
 type Props = {
   allRequests: [Request];
   currentRequest: Request;
-  onRequestSeleceted: Function;
+  onRequestSeleceted: (request: Request) => void;
 };
 
 const SideBar = (props: Props) => {
   const { currentRequest, allRequests, onRequestSeleceted } = props;
   return (
     <Bar>
+      <NewRequestButton>Create new request</NewRequestButton>
       {allRequests.map((request: Request) => (
         <RequestBarItem
           key={request.id}
@@ -33,6 +34,20 @@ const Bar = styled.div`
   background-color: #403d3d;
   position: fixed;
   cursor: pointer;
+`;
+
+const NewRequestButton = styled.div`
+  background-color: #545151;
+  height: 80px;
+  border-bottom: 1px solid #82817c;
+  color: white;
+  font-weight: bold;
+  line-height: 80px;
+  text-align: center;
+
+  &:hover {
+    background-color: #6e6666;
+  }
 `;
 
 export default SideBar;
