@@ -1,14 +1,12 @@
 import SideEffectJs from 'side-effect-js';
+import { ApiClient } from '../../api/ApiClient';
 
 function delay(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const realLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => {
-    if (username !== "else" && password !== "else")
-        return Promise.reject("Implement Real API");
-    else
-        return Promise.resolve("This is fake token");
+    return ApiClient.Login(username, password);
 }; 
 const mockLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => {
     return delay(3000).then(() => {

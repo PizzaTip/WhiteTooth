@@ -19,7 +19,8 @@
     "side-effect-js": "^1.1.0",
     "styled-components": "^5.1.0",
     "typescript": "^3.8.3",
-    "universal-cookie": "^4.0.3"
+    "universal-cookie": "^4.0.3",
+    "axios": "^0.19.2"
   },
   "scripts": {
     "start": "react-scripts start",

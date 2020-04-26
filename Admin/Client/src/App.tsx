@@ -12,7 +12,7 @@ import {
 import MainPage from './pages/mainPage';
 
 //Change this to move from real to mock side effects
-const isMocking = true;
+const isMocking = false;
 InitSideEffects(isMocking);
 
 function App() {
