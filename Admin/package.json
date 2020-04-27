@@ -13,6 +13,7 @@
     "author": "PizzaTip",
     "license": "MIT",
     "dependencies": {
+        "@types/cors": "^2.8.6",
         "@types/express": "^4.17.2",
         "@types/uuid": "^7.0.0",
         "cors": "^2.8.5",

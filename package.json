@@ -12,9 +12,7 @@
     "prebuild-admin-all": "npm-run-all --parallel install-admin-server install-admin-ui",
     "build-admin-all": "npm-run-all --parallel build-admin-server build-admin-ui",
     "whitetooth": "cd ./API/Api && npm i && npm run api",
-    "wt-admin-ui": "cd ./Admin/Client && npm i &&  npm run start",
-    "wt-admin-api": "cd ./Admin/Api && npm i &&  npm run admin",
-    "wt-admin": "npm-run-all --parallel wt-admin-ui wt-admin-api"
+    "admin": "npm run admin --prefix Admin"
   },
   "repository": {
     "type": "git",
@@ -28,5 +26,6 @@
   "homepage": "https://github.com/PizzaTip/WhiteTooth#readme",
   "devDependencies": {
     "npm-run-all": "^4.1.5"
-  }
+  },
+  "dependencies": {}
 }
