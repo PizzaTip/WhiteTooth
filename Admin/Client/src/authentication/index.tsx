@@ -26,6 +26,7 @@ export default class Authentication {
     }
 
     private static SetToken(token: string) {
-        this._cookies.set(this.COOKIE_NAME, token);
+        const msMonth = 1000 * 60 * 60 * 24 * 30;
+        this._cookies.set(this.COOKIE_NAME, token, { path: '/', expires: new Date(Date.now() + (msMonth)) });
     }
 }
