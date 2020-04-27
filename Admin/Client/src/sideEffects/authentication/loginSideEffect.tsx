@@ -1,12 +1,12 @@
 import SideEffectJs from 'side-effect-js';
-import { ApiClient } from '../../api/ApiClient';
+import Api from '../../api/wtAdminApi';
 
 function delay(ms:number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const realLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => {
-    return ApiClient.Login(username, password);
+    return Api.login(username, password);
 }; 
 const mockLoginSideEffect: LoginSideEffectType = (username: string, password: string): Promise<string> => {
     return delay(3000).then(() => {
