@@ -1,13 +1,13 @@
 [
   {
-    "id": "example",
-    "url": "example",
-    "name": "example - name",
+    "id": "4079dd20-84a5-11ea-8a76-d771bd1jfh3j",
+    "url": "/products",
+    "name": "Get Product",
     "method": "GET",
     "response": {
       "headers": { "Content-Type": "application/json" },
       "status": 200,
-      "body": "['example', 'response']"
+      "body": "{ id: \"1\", name: \"Blue cheese\", quantity: \"3\" }"
     }
   },
   {
@@ -15,14 +15,14 @@
     "name": "Register user",
     "url": "/users",
     "method": "POST",
-    "response": { "body": "", "headers": {}, "status": 200 }
+    "response": { "body": "", "headers": {}, "status": 500 }
   },
   {
     "id": "4079dd20-84a5-11ea-8a76-adfdabadbadh",
     "name": "Update vehicle",
     "url": "/vehicle",
     "method": "PUT",
-    "response": { "body": "", "headers": {}, "status": 200 }
+    "response": { "body": "", "headers": {}, "status": 404 }
   },
   {
     "id": "4079dd20-84a5-11ea-8a76-adfdabadb213",
