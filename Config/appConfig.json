@@ -1,0 +1,13 @@
+{
+  "authentication": {
+    "username": "mock",
+    "password": "mock",
+    "token": "token-test-change-to-whatever"
+  },
+  "adminserver": {
+    "port": "3100",
+    "routes": {
+      "authentication": "authentication"
+    }
+  }
+}
