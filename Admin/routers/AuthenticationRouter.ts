@@ -6,9 +6,7 @@ export function authenticationRouter() {
 
     // Create new request
     router.post(`/${appConfig.adminserver.routes.authentication}`, (req: Request, res: Response) => {
-        const username = req.body.username;
-        const password = req.body.password;
-
+        const { username, password } = req.body;
         // validate all inputs supplied
         if (!username || !password) {
             res.status(500).send({ error: 'Sorry, Missing parameter' }).end();
