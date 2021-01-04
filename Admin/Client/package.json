@@ -10,7 +10,7 @@
     "@types/node": "^14.0.13",
     "@types/jest": "^26.0.0",
     "@types/react-dom": "^16.9.8",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
