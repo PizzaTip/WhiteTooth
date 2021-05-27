@@ -19,7 +19,7 @@
     "react-scripts": "3.4.1",
     "side-effect-js": "^2.1.0",
     "styled-components": "^5.1.1",
-    "typescript": "^3.9.2",
+    "typescript": "^4.3.2",
     "universal-cookie": "^4.0.3"
   },
   "scripts": {
